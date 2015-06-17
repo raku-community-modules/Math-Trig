@@ -55,33 +55,73 @@ sub cartesian-to-spherical($x,$y,$z) is export(:radial)
 
 sub spherical-to-cartesian($rho, $theta, $phi) is export(:radial)
 {
-    
+    return ( $rho * cos( $theta ) * sin( $phi ),
+             $rho * sin( $theta ) * sin( $phi ),
+             $rho * cos( $phi   ) );
 }
 
-sub spherical-to-cylindrical($x, $y, $z) is export(:radial)
+sub spherical-to-cylindrical($rho, $theta, $phi) is export(:radial)
 {
+    my ($x, $y, $z) = spherical-to-cartesian($rho,$theta,$phi);
+    return ( sqrt( $x * $x + $y * $y ), $theta, $z );
 }
 
 sub cylindrical-to-cartesian($rho, $theta, $z) is export(:radial)
 {
+    return ( $rho * cos( $theta ), $rho * sin( $theta ), $z );
 }
 
 sub cylindrical-to-spherical($rho, $theta, $phi)  is export(:radial)
 {
+    return ( cartesian-to-spherical( cylindrical-to-cartesian( $rho, $theta, $phi ) ) );
 }
 
-sub great-circle-distance($theta0, $phi0, $theta1, $phi1) is export(:great-circle)
+sub great-circle-distance($theta0, $phi0, $theta1, $phi1, $rho = 1) is export(:great-circle)
 {
+    my $lat0 = pi/2 - $phi0;
+    my $lat1 = pi/2 - $phi1;
+    return $rho * acos( cos( $lat0 ) * cos( $lat1 ) * cos( $theta0 - $theta1 ) +
+                   sin( $lat0 ) * sin( $lat1 ) );
 }
 
 sub great-circle-direction($theta0, $phi0, $theta1, $phi1) is export(:great-circle)
 {
+    my $lat0 = pi/2 - $phi0;
+    my $lat1 = pi/2 - $phi1;
+ 
+    return rad2rad(2 * pi -
+        atan2(sin($theta0-$theta1) * cos($lat1),
+                cos($lat0) * sin($lat1) -
+                    sin($lat0) * cos($lat1) * cos($theta0-$theta1)));
 }
-# TODO: how to export this symbol?
-constant great-circle-bearing = &great-circle-direction;
 
-sub great-circle-waypoint($theta0, $phi0, $theta1, $phi1, $point) is export(:great-circle)
+# TODO: how to export this symbol?
+constant great-circle-bearing ::= &great-circle-direction;
+
+sub great-circle-waypoint($theta0, $phi0, $theta1, $phi1, $point = 0.5) is export(:great-circle)
 {
+    my $d = great-circle-distance( $theta0, $phi0, $theta1, $phi1 );
+ 
+    return if $d == pi;
+ 
+    my $sd = sin($d);
+ 
+    return ($theta0, $phi0) if $sd == 0;
+ 
+    my $A = sin((1 - $point) * $d) / $sd;
+    my $B = sin(     $point  * $d) / $sd;
+ 
+    my $lat0 = pi/2 - $phi0;
+    my $lat1 = pi/2 - $phi1;
+ 
+    my $x = $A * cos($lat0) * cos($theta0) + $B * cos($lat1) * cos($theta1);
+    my $y = $A * cos($lat0) * sin($theta0) + $B * cos($lat1) * sin($theta1);
+    my $z = $A * sin($lat0)                + $B * sin($lat1);
+ 
+    my $theta = atan2($y, $x);
+    my $phi   = acos($z);
+ 
+    return ($theta, $phi);
 }
 
 # TODO: how to export this symbol?
@@ -89,4 +129,17 @@ constant great-circle-midpoint = &great-circle-waypoint.assuming(:point(0.5));
 
 sub great-circle-destination( $theta0, $phi0, $dir0, $dst ) is export(:great-circle)
 {
+    my $lat0 = pi/2 - $phi0;
+ 
+    my $phi1   = asin(sin($lat0)*cos($dst) +
+                      cos($lat0)*sin($dst)*cos($dir0));
+ 
+    my $theta1 = $theta0 + atan2(sin($dir0)*sin($dst)*cos($lat0),
+                                 cos($dst)-sin($lat0)*sin($phi1));
+ 
+    my $dir1 = great-circle-bearing($theta1, $phi1, $theta0, $phi0) + pi;
+ 
+    $dir1 -= 2*pi if $dir1 > 2*pi;
+ 
+    return ($theta1, $phi1, $dir1);
 }
