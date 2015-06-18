@@ -78,7 +78,7 @@ sub cylindrical-to-cartesian($rho, $theta, $z) is export(:radial)
 
 sub cylindrical-to-spherical($rho, $theta, $phi)  is export(:radial)
 {
-    return ( cartesian-to-spherical( cylindrical-to-cartesian( $rho, $theta, $phi ) ) );
+    return cartesian-to-spherical( |cylindrical-to-cartesian( $rho, $theta, $phi ) );
 }
 
 sub great-circle-distance($theta0, $phi0, $theta1, $phi1, $rho = 1) is export(:great-circle)
