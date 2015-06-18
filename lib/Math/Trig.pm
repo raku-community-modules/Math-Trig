@@ -66,6 +66,11 @@ sub spherical-to-cylindrical($rho, $theta, $phi) is export(:radial)
     return ( sqrt( $x * $x + $y * $y ), $theta, $z );
 }
 
+sub cartesian-to-cylindrical($x,$y,$z) is export(:radial)
+{
+    return ( sqrt( $x * $x + $y * $y ), atan2( $y, $x ), $z );
+}
+
 sub cylindrical-to-cartesian($rho, $theta, $z) is export(:radial)
 {
     return ( $rho * cos( $theta ), $rho * sin( $theta ), $z );
