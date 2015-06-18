@@ -95,8 +95,7 @@ sub great-circle-direction($theta0, $phi0, $theta1, $phi1) is export(:great-circ
                     sin($lat0) * cos($lat1) * cos($theta0-$theta1)));
 }
 
-# TODO: how to export this symbol?
-constant great-circle-bearing ::= &great-circle-direction;
+our &great-circle-bearing is export(:great-circle) = &great-circle-direction;
 
 sub great-circle-waypoint($theta0, $phi0, $theta1, $phi1, $point = 0.5) is export(:great-circle)
 {
@@ -124,8 +123,7 @@ sub great-circle-waypoint($theta0, $phi0, $theta1, $phi1, $point = 0.5) is expor
     return ($theta, $phi);
 }
 
-# TODO: how to export this symbol?
-constant great-circle-midpoint = &great-circle-waypoint.assuming(:point(0.5));
+our &great-circle-midpoint is export(:great-circle) = &great-circle-waypoint.assuming(:point(0.5));
 
 sub great-circle-destination( $theta0, $phi0, $dir0, $dst ) is export(:great-circle)
 {
