@@ -28,7 +28,7 @@ Jonathan Scott Duff <duff@pobox.com>
 ACKNOWLEDGEMENTS
 ================
 
-This module is shamelessly based on the L<Perl
-5 module|https://metacpan.org/pod/Math::Trig> of the same name.
-Without the authors and maintainers of B<that> module, this module
+This module is shamelessly based on the [Perl
+5 module](https://metacpan.org/pod/Math::Trig) of the same name.
+Without the authors and maintainers of *that* module, this module
 wouldn't exist in this form.
