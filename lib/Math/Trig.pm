@@ -1,10 +1,8 @@
 unit module Math::Trig:ver<0.02>;
 
-constant two-pi = pi * 2;
-
 sub rad2rad ($rad)  is export 
 {
-    $rad % two-pi;
+    $rad % tau;
 }
 
 sub deg2deg ($deg) is export
@@ -39,12 +37,12 @@ sub deg2grad ($deg) is export
 
 sub rad2grad ($rad) is export
 {
-    400 / two-pi * $rad;
+    400 / tau * $rad;
 }
 
 sub grad2rad ($grad) is export 
 {
-    two-pi / 400 * $grad;
+    tau / 400 * $grad;
 }
 
 sub cartesian-to-spherical($x,$y,$z) is export(:radial)
