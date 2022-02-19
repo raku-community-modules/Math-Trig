@@ -62,4 +62,4 @@ plan 30;
     is-approx($z, 1, '');
 }
 
-
+# vim: expandtab shiftwidth=4

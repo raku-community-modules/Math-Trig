@@ -42,3 +42,5 @@ use-ok 'Math::Trig';
 	ok try { EVAL("&great-circle-midpoint") },      'great-circle-midpoint is exported by :great-circle';
 	ok try { EVAL("&great-circle-destination") },   'great-circle-destination is exported by :great-circle';
 }
+
+# vim: expandtab shiftwidth=4

@@ -89,3 +89,5 @@ plan 28;
  
     is-approx($dst1, $dst2, '');
 }
+
+# vim: expandtab shiftwidth=4

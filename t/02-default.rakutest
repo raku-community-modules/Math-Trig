@@ -16,3 +16,4 @@ is-approx(deg2grad(180), 200, '180 degrees is pi radians');
 is-approx(rad2grad(pi), 200, '200 gradiens is 180 degrees');
 is-approx(grad2rad(200), pi, '200 gradiens is 180 degrees');
 
+# vim: expandtab shiftwidth=4

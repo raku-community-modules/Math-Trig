@@ -1,16 +1,24 @@
 {
-    "perl" : "6.*",
-    "name" : "Math::Trig",
-    "license" : "Artistic-2.0",
-    "version" : "0.0.2",
-    "description" : "Useful trigonometric routines",
-    "author" : "Jonathan Scott Duff <duff@pobox.com>",
-    "repo-type": "git",
-    "source-url" : "git://github.com/raku-community-modules/Math-Trig.git",
-    "depends" : [ ],
-    "build-depends" : [ ],
-    "test-depends" : [ "Test" ],
-    "provides" : {
-      "Math::Trig" : "lib/Math/Trig.pm"
-    }
+  "auth": "zef:raku-community-modules",
+  "author": "Jonathan Scott Duff",
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "Trigonometric routines not already built-in",
+  "license": "Artistic-2.0",
+  "name": "Math::Trig",
+  "perl": "6.*",
+  "provides": {
+    "Math::Trig": "lib/Math/Trig.rakumod"
+  },
+  "repo-type": "git",
+  "resources": [
+  ],
+  "source-url": "git://github.com/raku-community-modules/Math-Trig.git",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.3"
 }
