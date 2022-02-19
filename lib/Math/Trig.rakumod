@@ -1,4 +1,4 @@
-unit module Math::Trig:ver<0.03>:auth<zef:raku-community-modules>;
+unit module Math::Trig:ver<0.0.3>:auth<zef:raku-community-modules>;
 
 sub rad2rad($rad)    is export { $rad % tau        }
 
